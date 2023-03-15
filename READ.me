@@ -1,0 +1,76 @@
+
+There are four accounts used in the code in hello_world.ts in lesson4_helloworld project:
+1. payer - This is the keypair associated with the fees' payer. 
+It is generated in the establishPayer function and is used to pay 
+for the transactions that interact with the program.
+
+2. programId - This is the public key of the deployed hello world 
+program. It is read from the keypair file in the checkProgram function.
+
+3. greetedPubkey - This is the public key of the account we are saying 
+hello to. It is derived from the program's public key, the payer's 
+public key, and a seed string in the checkProgram function.
+
+4. GreetingAccount - This is the state of a greeting account managed by 
+the hello world program. It is defined as a class in the code and is 
+used in the GreetingSchema Map to define the Borsh schema for greeting accounts.
+
+In the break.ts code in break project, 
+we have accounts which is a collection of Solana accounts, 
+and includes feePayerKeypairs and programAccounts.
+
+1. feePayerKeypairs is an array of keypairs that are used to pay transaction 
+fees on the Solana network. Each keypair includes a public key and a secret key.
+
+2. programAccounts is an array of public keys representing accounts associated 
+with a Solana program. These accounts can be used for storing data or state 
+related to a program.
+
+Transaction is a function that changes the state of accounts in the Solana blockchain.
+Each transaction consists of a sequence of instructions, each of which specifies how 
+to update the state of one or more accounts. An account in Solana is similar to an 
+account in a traditional bank. It has an owner, a balance, and can hold state data.
+
+In hello_world.ts in lesson4-helloworld project, there are several transactions that 
+interact with different accounts on the Solana blockchain. Here is a breakdown of the 
+transactions and accounts in the code:
+
+1. The requestAirdrop transaction: This transaction requests a transfer of SOL (the native 
+token of the Solana blockchain) to the payer account. This transaction is initiated by 
+calling the requestAirdrop method of the Connection object, passing in the payer account's 
+public key and the amount of SOL to transfer. The confirmTransaction method is called to wait
+for the transaction to be confirmed on the blockchain.
+
+2. The createAccount transaction: This transaction creates a new account on the blockchain to 
+store the state of the GreetingAccount object. The TransactionInstruction object specifies 
+that a new account should be created with the SystemProgram.createAccount method, passing in 
+the greetedPubkey as the new account's public key, the payer account as the owner of the new 
+account, and the GREETING_SIZE constant as the size of the new account.
+
+3. The initializeAccount transaction: This transaction initializes the new account created in 
+the previous transaction with the state of the GreetingAccount object. 
+The TransactionInstruction object specifies that the new account should be initialized with 
+the programId as the program to use to initialize the account, the greetedPubkey as the 
+account to initialize, and the payer account as the owner of the account.
+
+4. The incrementCounter transaction: This transaction updates the state of the 
+GreetingAccount object by incrementing its counter field. The TransactionInstruction object 
+specifies that the programId should be used to update the greetedPubkey account, passing in 
+the payer account as the owner of the account, and the borsh.serialize method to serialize 
+the new state of the GreetingAccount object.
+
+4. The sayHello transaction: This transaction reads the state of the GreetingAccount object 
+and logs a message to the console. The TransactionInstruction object specifies that the 
+programId should be used to read the state of the greetedPubkey account, passing in the payer 
+account as the owner of the account, and the SystemProgram.programId method to indicate that 
+no update to the account is necessary.
+
+Each transaction in Solana requires a fee to be paid in SOL to the validators that process the transaction. The payer account is used to pay the fees for all transactions in the code.
+createTransaction is a function that takes in the necessary parameters for creating and sending a transaction. It uses a web worker (CreateTransactionRPC) to generate a signed transaction, and then sends the transaction to the Solana network using a WebSocket. The function also dispatches actions to a Redux store to track the progress of the transaction, such as whether it has been confirmed or timed out.
+
+And in the break.ts in break project, createTransaction is a function that takes in the 
+necessary parameters for creating and sending a transaction. It uses a web worker 
+(CreateTransactionRPC) to generate a signed transaction, and then sends the transaction 
+to the Solana network using a WebSocket. The function also dispatches actions to a Redux 
+store to track the progress of the transaction, such as whether it has been confirmed or 
+timed out.
